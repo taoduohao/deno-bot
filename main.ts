@@ -40,40 +40,21 @@ const encode = (str) => {
 }
 
 // 答复数据
-const answerList = {
-  zh: {
-    start: {
-      photo: 'https://test-h5.ximi.world/static/img/telegram/picture2.png',
-      caption:
-        '感谢您选择我们，平台币空投即将开始，越早加入拿币越优惠！\n平台入金≥100USDT，最高赠送等价值105%的WCT。\n入金100U得205U（100U+价值105U的WCT），多买多送无上限。\n当前估价：<b>1WCT≈1U</b>，下期估价：1WCT≈1.02U，趁WCT币价上涨，最高赠送105%比例下调前入手更优惠，财富就要快人一步。\n公测期间加入社区可享受专属福利，还等什么，快来玩吧！',
-    },
-    invite: {
-      photo: 'https://test-h5.ximi.world/static/img/telegram/picture3.png',
-      caption:
-        '邀请您的朋友注册该平台，并通过您的专属链接充值。\n朋友充值成功后，您将立即获得2%的USDT返现。\n如果您的朋友参与游戏投注，您将获得49%的返现USDT。🎁\n您的个人链接',
-    },
-    help: {
-      photo: '',
-      caption:
-        '亲爱的FuntrueFuners，如果您在使用我们的产品时有任何问题，请随时联系我们。\n采购对账单\nFuntrunFun平台禁止18岁以下的用户在平台上充值，平台有权拒绝不合规用户的充值订单。\n📖 如何注册\n如果你有Telegram账户，你可以点击游戏链接自动完成注册，其他请参考教程。\n链接https://t.me/FutureFunOfficial/36\n📬 如何通过邀请进行挖掘\n其他常见问题\n链接https://t.me/FutureFunOfficial/17',
-    },
+const languageObj = {
+  start: {
+    photo: 'https://test-h5.ximi.world/static/img/telegram/picture2.png',
+    caption:
+      'Thank you for choosing us! The platform coin airdrop is about to begin. The earlier you join, the more advantageous the coin offering! \nDeposit ≥100 USDT on the platform and receive up to 105% equivalent in WCT. Deposit 100 USDT and get 205 USDT (100 USDT + value of 105 USDT in WCT). Buy more, get more with no upper limit. \nCurrent estimate: <b>1 WCT ≈ 1 USDT</b>, next time estimate: 1 WCT ≈ 1.02 USDT. Take advantage of the rising WCT coin price. Acquire at the highest 105% gift ratio before the adjustment for more advantages. Stay ahead in wealth accumulation. \nJoin the community during the public testing period to enjoy exclusive benefits. What are you waiting for? Come and join the fun!',
   },
-  en: {
-    start: {
-      photo: 'https://test-h5.ximi.world/static/img/telegram/picture2.png',
-      caption:
-        'Thank you for choosing us! The platform coin airdrop is about to begin. The earlier you join, the more advantageous the coin offering! \nDeposit ≥100 USDT on the platform and receive up to 105% equivalent in WCT. Deposit 100 USDT and get 205 USDT (100 USDT + value of 105 USDT in WCT). Buy more, get more with no upper limit. \nCurrent estimate: <b>1 WCT ≈ 1 USDT</b>, next time estimate: 1 WCT ≈ 1.02 USDT. Take advantage of the rising WCT coin price. Acquire at the highest 105% gift ratio before the adjustment for more advantages. Stay ahead in wealth accumulation. \nJoin the community during the public testing period to enjoy exclusive benefits. What are you waiting for? Come and join the fun!',
-    },
-    invite: {
-      photo: 'https://test-h5.ximi.world/static/img/telegram/picture3.png',
-      caption:
-        'Invite your friends to sign up for the platform and top up via your exclusive link.\nAfter your friend tops up successfully, you will immediately receive 2% USDT cashback.\nIf your friend participates in the game betting, you will get 49% rebate USDT cashback.🎁\nYour personal link ',
-    },
-    help: {
-      photo: '',
-      caption:
-        'Dear FuntrueFuners, if you have any issues while using our products, dot not hesitate to contact us.\nPurchase Statement\nThe FuntrunFun platform forbids users under the age of 18 to top up on the platform, and the platform has the right to refuse top-up orders from non-compliant users.\n📖 How to Register\nIf you have a Telegram account, you can automatically complete the registration by clicking on the game link, for others, please refer to the tutorial.\nLink: https://t.me/FutureFunOfficial/36\n📬 How to Mine by Invitation\nOther Common Questions\nLink: https://t.me/FutureFunOfficial/17',
-    },
+  invite: {
+    photo: 'https://test-h5.ximi.world/static/img/telegram/picture3.png',
+    caption:
+      'Invite your friends to sign up for the platform and top up via your exclusive link.\nAfter your friend tops up successfully, you will immediately receive 2% USDT cashback.\nIf your friend participates in the game betting, you will get 49% rebate USDT cashback.🎁\nYour personal link ',
+  },
+  help: {
+    photo: '',
+    caption:
+      'Dear FuntrueFuners, if you have any issues while using our products, dot not hesitate to contact us.\nPurchase Statement\nThe FuntrunFun platform forbids users under the age of 18 to top up on the platform, and the platform has the right to refuse top-up orders from non-compliant users.\n📖 How to Register\nIf you have a Telegram account, you can automatically complete the registration by clicking on the game link, for others, please refer to the tutorial.\nLink: https://t.me/FutureFunOfficial/36\n📬 How to Mine by Invitation\nOther Common Questions\nLink: https://t.me/FutureFunOfficial/17',
   },
 }
 
@@ -125,11 +106,8 @@ await bot.api.setMyCommands(commandList)
 bot.command(instructList, async (ctx: any) => {
   const {
     text,
-    from: { id: chatId, username, language_code },
+    from: { id: chatId },
   } = ctx.message
-  const languageObj = language_code.includes('zh')
-    ? answerList.zh
-    : answerList.en
 
   const inviteUrl = `${miniAppUrl}?startapp=chat_str${encode(chatId)}`
   console.log('【消息信息】', ctx.message)
@@ -161,4 +139,4 @@ bot.command(instructList, async (ctx: any) => {
 bot.catch((err: any) => {
   console.log('【错误提示】', err)
 })
-bot.start() // deno run --allow-net main.ts
+bot.start() // deno run --allow-net bot.ts
